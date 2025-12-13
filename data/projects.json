@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Home Networking Lab",
+    "stack": ["Networking", "Routing", "Synology NAS", "Services"],
+    "description": "Built a home lab network and hosted services on a Synology NAS. Practiced IP planning and service hosting.",
+    "link": "https://github.com/yourname/home-network-lab"
+  },
+  {
+    "title": "SQL / MySQL Practice Database",
+    "stack": ["MySQL", "SQL", "Schema Design"],
+    "description": "Designed tables and queries to practice joins, validation, and troubleshooting common database issues.",
+    "link": "https://github.com/yourname/sql-practice"
+  },
+  {
+    "title": "Ticketing System Prototype",
+    "stack": ["Workflows", "Automation", "Data"],
+    "description": "Created a simple ticket workflow to learn intake, tracking, and reporting.",
+    "link": "https://github.com/yourname/ticketing-prototype"
+  }
+]
