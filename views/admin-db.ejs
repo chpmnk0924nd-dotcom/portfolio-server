@@ -1,0 +1,49 @@
+<%- include("partials/head", { title }) %>
+
+<section class="hero">
+  <h1>Database Viewer</h1>
+  <p class="muted">Read-only view of what’s currently in Postgres.</p>
+</section>
+
+<div class="card">
+  <h2 style="margin-top:0;">Projects (<%= projects.length %>)</h2>
+
+  <% if (!projects.length) { %>
+    <p class="muted">No rows found in <code>projects</code> table yet.</p>
+  <% } else { %>
+    <div style="overflow:auto;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:8px;">id</th>
+            <th style="text-align:left; padding:8px;">title</th>
+            <th style="text-align:left; padding:8px;">slug</th>
+            <th style="text-align:left; padding:8px;">stack</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% projects.forEach(p => { %>
+            <tr>
+              <td style="padding:8px; border-top:1px solid rgba(255,255,255,.08);"><%= p.id %></td>
+              <td style="padding:8px; border-top:1px solid rgba(255,255,255,.08);"><%= p.title %></td>
+              <td style="padding:8px; border-top:1px solid rgba(255,255,255,.08);"><%= p.slug %></td>
+              <td style="padding:8px; border-top:1px solid rgba(255,255,255,.08);"><%= Array.isArray(p.stack) ? p.stack.join(", ") : (p.stack || "") %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0;">Skills table (optional)</h2>
+  <% if (!skillsRows || !skillsRows.length) { %>
+    <p class="muted">No <code>skills</code> table found (or it’s empty). That’s fine for now.</p>
+  <% } else { %>
+    <p class="muted"><%= skillsRows.length %> rows</p>
+  <% } %>
+</div>
+
+<%- include("partials/foot") %>
+

@@ -1,0 +1,18 @@
+[
+  { "name": "Networking Fundamentals", "level": 60, "category": "Networking" },
+  { "name": "Subnetting / IP Planning", "level": 55, "category": "Networking" },
+  { "name": "Wireshark (Basics)", "level": 45, "category": "Networking" },
+
+  { "name": "Windows Troubleshooting", "level": 60, "category": "IT Support" },
+  { "name": "Hardware / PC Builds", "level": 65, "category": "IT Support" },
+  { "name": "Ticketing / Documentation", "level": 50, "category": "IT Support" },
+
+  { "name": "SQL Queries (Joins, GROUP BY)", "level": 55, "category": "Databases" },
+  { "name": "MySQL (Basics)", "level": 50, "category": "Databases" },
+
+  { "name": "HTML / CSS", "level": 55, "category": "Web" },
+  { "name": "JavaScript (Basics)", "level": 40, "category": "Web" },
+
+  { "name": "Docker (Basics)", "level": 45, "category": "DevOps" },
+  { "name": "Git / GitHub (Basics)", "level": 50, "category": "DevOps" }
+]

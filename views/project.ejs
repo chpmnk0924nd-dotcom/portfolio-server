@@ -1,0 +1,17 @@
+<%- include("layout", { title, body: `
+  <a href="/projects">← Back</a>
+
+  <h1>${project.title}</h1>
+  <p>${project.description}</p>
+
+  <p class="tags">${(project.stack || []).map(s => `<span>${s}</span>`).join("")}</p>
+
+  ${project.details?.length ? `
+    <h2>What I did</h2>
+    <ul>
+      ${project.details.map(d => `<li>${d}</li>`).join("")}
+    </ul>
+  ` : ""}
+
+  <p><a href="${project.link}" target="_blank" rel="noreferrer">View Repo →</a></p>
+`}) %>

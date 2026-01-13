@@ -1,0 +1,19 @@
+<%- include("layout", { title, body: `
+  <h1>Contact</h1>
+
+  ${error ? `<div class="alert">${error}</div>` : ""}
+  ${sent ? `<div class="success">Message received. I’ll get back to you.</div>` : ""}
+
+  <form method="POST" action="/contact" class="form">
+    <label>Name</label>
+    <input name="name" required />
+
+    <label>Email</label>
+    <input name="email" type="email" required />
+
+    <label>Message</label>
+    <textarea name="message" rows="6" required></textarea>
+
+    <button class="btn" type="submit">Send</button>
+  </form>
+`}) %>

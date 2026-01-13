@@ -1,0 +1,103 @@
+<%- include("partials/head", { title }) %>
+
+<section class="hero">
+  <h1>Skills</h1>
+  <p>Self-rated skill map (0–100). Filter by category.</p>
+</section>
+
+<div class="card" style="margin-top:16px;">
+  <div class="row" style="gap:10px; flex-wrap:wrap;">
+    <button class="btn ghost" data-cat="All" type="button">All</button>
+    <span id="cats"></span>
+    <span class="muted" id="meta" style="margin-left:auto;"></span>
+  </div>
+</div>
+
+<div id="list" style="margin-top:16px;"></div>
+
+<script>
+  const SKILLS = <%- JSON.stringify(skills).replace(/</g, "\\u003c") %>;
+
+  const $cats = document.getElementById("cats");
+  const $list = document.getElementById("list");
+  const $meta = document.getElementById("meta");
+
+  const categories = Array.from(new Set(SKILLS.map(s => s.category))).sort();
+  let active = "All";
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+      ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" })[c]
+    );
+  }
+
+  function btn(cat) {
+    const on = cat === active ? "tag tag-active" : "tag";
+    return `<button type="button" class="${on}" data-cat="${esc(cat)}">${esc(cat)}</button>`;
+  }
+
+  function renderCats() {
+    $cats.innerHTML = categories.map(btn).join(" ");
+  }
+
+function barRow(s) {
+  const lvl = Math.max(0, Math.min(100, Number(s.level || 0)));
+  return `
+    <div class="card" style="margin-bottom:12px;">
+      <div class="row" style="justify-content:space-between; gap:12px;">
+        <div>
+          <div style="font-weight:700;">${esc(s.name)}</div>
+          <div class="muted" style="font-size:12px;">${esc(s.category)}</div>
+        </div>
+        <div style="font-weight:800;">${lvl}</div>
+      </div>
+
+      <div class="bar-wrap">
+        <div class="bar" data-level="${lvl}"></div>
+      </div>
+    </div>
+  `;
+}
+
+function animateBars() {
+  const bars = document.querySelectorAll(".bar");
+
+  // set a small stagger delay per bar (premium feel)
+  bars.forEach((b, i) => {
+    b.style.transitionDelay = `${i * 40}ms`;
+    b.style.width = "0%";
+  });
+
+  requestAnimationFrame(() => {
+    bars.forEach((b) => {
+      b.style.width = (b.getAttribute("data-level") || "0") + "%";
+    });
+  });
+}
+
+  function render() {
+  const filtered = active === "All" ? SKILLS : SKILLS.filter(s => s.category === active);
+  const avg = filtered.length
+    ? Math.round(filtered.reduce((a,s) => a + (Number(s.level)||0), 0) / filtered.length)
+    : 0;
+
+  $meta.textContent = `${filtered.length} skills • avg ${avg}`;
+  $list.innerHTML = filtered.map(barRow).join("");
+
+  animateBars(); // <-- add this
+}
+
+
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-cat]");
+    if (!b) return;
+    active = b.getAttribute("data-cat");
+    renderCats();
+    render();
+  });
+
+  renderCats();
+  render();
+</script>
+
+<%- include("partials/foot") %>
