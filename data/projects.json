@@ -1,20 +1,39 @@
 [
   {
     "title": "Home Networking Lab",
+    "slug": "home-networking-lab",
+    "featured": true,
     "stack": ["Networking", "Routing", "Synology NAS", "Services"],
-    "description": "Built a home lab network and hosted services on a Synology NAS. Practiced IP planning and service hosting.",
-    "link": "https://github.com/yourname/home-network-lab"
+    "description": "Built a home lab network and hosted services on a Synology NAS...",
+    "link": "https://github.com/chpmnk0924nd-dotcom/home-network-lab",
+    "details": [
+      "Planned subnets and VLAN separation for lab vs family network.",
+      "Hosted services on Synology (SMB, containers, backups).",
+      "Documented troubleshooting and monitoring steps."
+    ]
   },
   {
     "title": "SQL / MySQL Practice Database",
+    "slug": "sql-mysql-practice-database",
     "stack": ["MySQL", "SQL", "Schema Design"],
     "description": "Designed tables and queries to practice joins, validation, and troubleshooting common database issues.",
-    "link": "https://github.com/yourname/sql-practice"
+    "link": "https://github.com/chpmnk0924nd-dotcom/sql-practice",
+    "details": [
+      "Created schemas and sample data to practice JOINs and aggregation.",
+      "Wrote queries to validate inputs and troubleshoot common errors.",
+      "Documented examples for repeatable practice."
+    ]
   },
   {
     "title": "Ticketing System Prototype",
+    "slug": "ticketing-system-prototype",
     "stack": ["Workflows", "Automation", "Data"],
     "description": "Created a simple ticket workflow to learn intake, tracking, and reporting.",
-    "link": "https://github.com/yourname/ticketing-prototype"
+    "link": "https://github.com/chpmnk0924nd-dotcom/ticketing-prototype",
+    "details": [
+      "Built an intake → triage → resolution workflow.",
+      "Tracked status changes and basic reporting.",
+      "Focused on realistic IT support processes."
+    ]
   }
 ]

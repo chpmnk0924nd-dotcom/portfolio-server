@@ -2,27 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title><%= title %></title>
   <link rel="stylesheet" href="/public/css/styles.css"/>
 </head>
 <body>
-  <header class="container">
-    <nav class="nav">
-      <a class="brand" href="/">Nick Deno</a>
-      <div class="links">
-        <a href="/projects">Projects</a>
-        <a href="/contact">Contact</a>
-      </div>
-    </nav>
-  </header>
 
-  <main class="container">
-    <%- body %>
-  </main>
+<header class="container">
+  <nav class="nav">
+    <a class="brand" href="/">Nick Deno</a>
 
-  <footer class="container footer">
-    <small>© <%= new Date().getFullYear() %> Nick Deno</small>
-  </footer>
+    <div class="links">
+      <a href="/">Home</a>
+      <a href="/projects">Projects</a>
+      <a href="/skills">Skills</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+  <%- body %>
+</main>
+
+<footer class="container footer">
+  <small>© <%= new Date().getFullYear() %> Nick Deno</small>
+</footer>
+
 </body>
 </html>

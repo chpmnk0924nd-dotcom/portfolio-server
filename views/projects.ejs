@@ -1,13 +1,123 @@
-<%- include("layout", { title, body: `
+<%- include("partials/head", { title }) %>
+
+<section class="hero">
   <h1>Projects</h1>
-  <div class="grid">
-    ${projects.map(p => `
-      <div class="tile">
-        <h2>${p.title}</h2>
-        <p>${p.description}</p>
-        <p class="tags">${p.stack.map(s => `<span>${s}</span>`).join("")}</p>
-        <a href="${p.link}" target="_blank" rel="noreferrer">View Repo ?</a>
-      </div>
-    `).join("")}
+  <p>Browse by stack tags or search. Click a project to view details.</p>
+</section>
+
+<div class="card" style="margin-top:16px;">
+  <div class="filters">
+    <input id="search" class="input" type="search"
+           placeholder="Search projects (title, description, stack)..." />
+    <div id="tags" class="tag-row"></div>
+    <div class="actions">
+      <button id="clear" class="btn" type="button">Clear</button>
+      <span id="count" class="muted"></span>
+    </div>
   </div>
-`}) %>
+</div>
+
+<div id="grid" class="grid" style="margin-top:16px;"></div>
+
+<script>
+  // Server → client data (SAFE)
+  const PROJECTS = <%- JSON.stringify(projects).replace(/</g, "\\u003c") %>;
+
+  const tagSet = new Set();
+  PROJECTS.forEach(p => (p.stack || []).forEach(t => tagSet.add(t)));
+  const ALL_TAGS = ["All", ...Array.from(tagSet).sort()];
+
+  const state = { q: "", tag: "All" };
+
+  const $tags   = document.getElementById("tags");
+  const $grid   = document.getElementById("grid");
+  const $search = document.getElementById("search");
+  const $clear  = document.getElementById("clear");
+  const $count  = document.getElementById("count");
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+      ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" })[c]
+    );
+  }
+
+  function renderTags() {
+    $tags.innerHTML = ALL_TAGS.map(t =>
+      `<button type="button"
+               class="tag${t === state.tag ? " tag-active" : ""}"
+               data-tag="${esc(t)}">${esc(t)}</button>`
+    ).join("");
+  }
+
+  function matches(p) {
+    const q = state.q.trim().toLowerCase();
+    const tagOk = state.tag === "All" || (p.stack || []).includes(state.tag);
+    if (!tagOk) return false;
+    if (!q) return true;
+
+    return [
+      p.title || "",
+      p.description || "",
+      (p.stack || []).join(" ")
+    ].join(" ").toLowerCase().includes(q);
+  }
+
+  function card(p) {
+    const tags = (p.stack || []).map(s => `<span>${esc(s)}</span>`).join("");
+    const details = p.slug
+      ? `<a class="btn" href="/projects/${encodeURIComponent(p.slug)}">Details</a>`
+      : "";
+    const repo = p.link
+      ? `<a class="btn" href="${esc(p.link)}" target="_blank">Repo</a>`
+      : "";
+
+    return `
+      <article class="card">
+        <h2>${esc(p.title || "Untitled Project")}</h2>
+        <p class="muted">${esc(p.description || "")}</p>
+        <p class="tags">${tags}</p>
+        <div class="row" style="gap:10px;">
+          ${details}${repo}
+        </div>
+      </article>
+    `;
+  }
+
+  function render() {
+    const filtered = PROJECTS.filter(matches);
+    $grid.innerHTML = filtered.length
+      ? filtered.map(card).join("")
+      : `<div class="card">
+           <h2>No matches</h2>
+           <p class="muted">Try a different search.</p>
+         </div>`;
+    $count.textContent = `${filtered.length} / ${PROJECTS.length}`;
+  }
+
+  $tags.addEventListener("click", e => {
+    const btn = e.target.closest("button[data-tag]");
+    if (!btn) return;
+    state.tag = btn.dataset.tag;
+    renderTags();
+    render();
+  });
+
+  $search.addEventListener("input", () => {
+    state.q = $search.value;
+    render();
+  });
+
+  $clear.addEventListener("click", () => {
+    state.q = "";
+    state.tag = "All";
+    $search.value = "";
+    renderTags();
+    render();
+  });
+
+  renderTags();
+  render();
+</script>
+
+<%- include("partials/foot") %>
+
