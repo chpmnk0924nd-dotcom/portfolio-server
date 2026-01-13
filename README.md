@@ -1,5 +1,7 @@
 # Nick Deno – IT Portfolio
 
+[![CI](https://github.com/chpmnk0924nd-dotcom/portfolio-server/actions/workflows/ci.yml/badge.svg)](https://github.com/chpmnk0924nd-dotcom/portfolio-server/actions/workflows/ci.yml)
+
 This is my personal IT portfolio built with **Node.js**, **Express**, and **EJS**.
 
 ## Features
